@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenClaw 入门培训 - 市场部</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .slide {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #667eea;
+            margin: 30px 0 20px;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            color: #764ba2;
+            margin: 20px 0 10px;
+            font-size: 1.3em;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin: 10px 0;
+            padding-left: 10px;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .card {
+            background: #f8f9ff;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #667eea;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .grid-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .grid-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .btn-outline {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .nav {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .code {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9ff;
+            border-radius: 10px;
+        }
+        
+        .step-num {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .cover {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .cover h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        
+        .cover p {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .tag {
+            display: inline-block;
+            background: #e8eeff;
+            color: #667eea;
+            padding: 5px 15px;
+            border-radius: 15px;
+            margin: 5px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <div class="container">
+        <!-- 封面 -->
+        <div class="slide active">
+            <div class="cover">
+                <div style="font-size: 4em; margin-bottom: 20px;">🦞</div>
+                <h1>OpenClaw 入门培训</h1>
+                <p>市场部专属 AI 助手 | 零基础也能上手</p>
+                <div style="margin-top: 40px;">
+                    <span class="tag">品牌</span>
+                    <span class="tag">公关</span>
+                    <span class="tag">新媒体</span>
+                    <span class="tag">用户研究</span>
+                </div>
+                <p style="margin-top: 40px; color: #999; font-size: 0.9em;">按 → 键或点击按钮继续</p>
+            </div>
+        </div>
+        
+        <!-- 什么是AI助手 -->
+        <div class="slide">
+            <h1>🤖 什么是 AI 助手？</h1>
+            <div class="card">
+                <h3>就像有个 24 小时待命的实习生</h3>
+                <p>不需要写代码，只需要说话或打字，AI 就能帮你完成各种工作</p>
+            </div>
+            
+            <h2>AI 能做什么？</h2>
+            <div class="grid">
+                <div class="grid-item">
+                    <div class="icon">📝</div>
+                    <h3>写文案</h3>
+                    <p>策划案、朋友圈、产品描述</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">🔍</div>
+                    <h3>搜信息</h3>
+                    <p>热点追踪、行业分析</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">💬</div>
+                    <h3>聊聊天</h3>
+                    <p>智能客服、问题解答</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">📊</div>
+                    <h3>做分析</h3>
+                    <p>数据整理、报告生成</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- OpenClaw 是什么 -->
+        <div class="slide">
+            <h1>🦞 OpenClaw 是什么？</h1>
+            <div class="card">
+                <h3>不是程序员专属，是每个人的效率工具</h3>
+                <p>一个连接到 Telegram 的 AI 助手，通过对话就能完成各种市场工作</p>
+            </div>
+            
+            <h2>为什么选择 OpenClaw？</h2>
+            <ul>
+                <li>✅ <strong>零门槛</strong> - 不用会编程，会发微信就能用</li>
+                <li>✅ <strong>多面手</strong> - 文案、搜索、分析、发布样样行</li>
+                <li>✅ <strong>免费用</strong> - 基础功能不花钱</li>
+                <li>✅ <strong>隐私安全</strong> - 数据本地处理</li>
+                <li>✅ <strong>多平台</strong> - 小红书、微信、Telegram 都能用</li>
+            </ul>
+            
+            <div class="card" style="margin-top: 30px; background: #e8f5e9; border-left-color: #4caf50;">
+                <h3>💡 核心理念</h3>
+                <p>用对话的方式，让 AI 帮你工作</p>
+            </div>
+        </div>
+        
+        <!-- 安装篇 -->
+        <div class="slide">
+            <h1>⚡ 快速安装</h1>
+            
+            <div class="card" style="background: #e8eeff; border-left-color: #667eea;">
+                <h3>⚡ 官方推荐安装（Windows/Mac/Linux）</h3>
+                <p>参考：<a href="https://docs.openclaw.ai/install" target="_blank">docs.openclaw.ai/install</a></p>
+            </div>
+            
+            <h2>Windows 安装 (PowerShell)</h2>
+            <div class="code">
+# 以管理员身份运行 PowerShell
+iwr -useb https://openclaw.ai/install.ps1 | iex
+            </div>
+            
+            <h2>Mac / Linux / WSL2 安装</h2>
+            <div class="code">
+curl -fsSL https://openclaw.ai/install.sh | bash
+            </div>
+            
+            <h2>运行引导</h2>
+            <div class="code">
+openclaw onboard --install-daemon
+            </div>
+            
+            <h2>验证安装</h2>
+            <div class="code">
+openclaw status        # 检查状态
+openclaw dashboard    # 打开控制台
+            </div>
+        </div>
+        
+        <!-- 首次配置 -->
+        <div class="slide">
+            <h1>⚙️ 首次配置</h1>
+            
+            <h2>绑定 Telegram</h2>
+            <div class="card">
+                <ol>
+                    <li>打开 Telegram，搜索 OpenClaw 机器人</li>
+                    <li>发送 <code>/start</code> 命令</li>
+                    <li>扫描电脑上的二维码</li>
+                    <li>绑定成功！</li>
+                </ol>
+            </div>
+            
+            <h2>配置 API（可选）</h2>
+            <div class="card">
+                <p>如果需要更强大的 AI 能力，可以配置付费 API</p>
+                <p>目前已配置好免费模型，直接可用</p>
+            </div>
+            
+            <h2>连接更多平台</h2>
+            <div class="grid">
+                <div class="grid-item">
+                    <div class="icon">📕</div>
+                    <h3>小红书</h3>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">💬</div>
+                    <h3>微信</h3>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">📧</div>
+                    <h3>邮件</h3>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 应用场景 -->
+        <div class="slide">
+            <h1>🎯 应用场景</h1>
+            
+            <h2>市场部日常工作</h2>
+            
+            <div class="grid">
+                <div class="grid-item">
+                    <div class="icon">📝</div>
+                    <h3>品牌组</h3>
+                    <p>文案创作<br>热点追踪<br>竞品分析</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">📢</div>
+                    <h3>公关组</h3>
+                    <p>舆情监测<br>回应模板<br>新闻稿</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">📕</div>
+                    <h3>新媒体</h3>
+                    <p>内容策划<br>多平台发布<br>数据复盘</p>
+                </div>
+                <div class="grid-item">
+                    <div class="icon">👥</div>
+                    <h3>用户研究</h3>
+                    <p>问卷分析<br>报告生成<br>用户画像</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 场景演示 -->
+        <div class="slide">
+            <h1>📺 场景演示</h1>
+            
+            <h2>场景1：写文案</h2>
+            <div class="card">
+                <p><strong>你说：</strong> "帮我写一条夏季防晒产品的朋友圈推广文案"</p>
+                <p><strong>AI 回复：</strong> 生成 3-5 条不同风格的文案供选择</p>
+            </div>
+            
+            <h2>场景2：搜热点</h2>
+            <div class="card">
+                <p><strong>你说：</strong> "最近美妆行业有什么热门话题？"</p>
+                <p><strong>AI 回复：</strong> 整理近期热点事件和话题趋势</p>
+            </div>
+            
+            <h2>场景3：做分析</h2>
+            <div class="card">
+                <p><strong>你说：</strong> "分析这周小红书的用户评论数据"</p>
+                <p><strong>AI 回复：</strong> 整理情感倾向、主要问题、改进建议</p>
+            </div>
+        </div>
+        
+        <!-- 对话技巧 -->
+        <div class="slide">
+            <h1>💬 对话技巧</h1>
+            
+            <h2>如何获得更好的结果</h2>
+            
+            <div class="card">
+                <h3>1. 清晰表达需求</h3>
+                <p>❌ "帮我写个文案" → ✅ "帮我写一条针对 25-30 岁女性的水乳产品推广文案，突出保湿功效"</p>
+            </div>
+            
+            <div class="card">
+                <h3>2. 分步骤完成</h3>
+                <p>复杂任务分开说：先确定主题 → 再写大纲 → 最后填充内容</p>
+            </div>
+            
+            <div class="card">
+                <h3>3. 及时追问修正</h3>
+                <p>不满意就说 "换个风格" 或 "再详细一点"</p>
+            </div>
+            
+            <h2>常用指令</h2>
+            <ul>
+                <li><code>/new</code> - 开始新对话</li>
+                <li><code>/help</code> - 查看帮助</li>
+                <li>直接 @OpenClaw - 在群聊中调用</li>
+            </ul>
+        </div>
+        
+        <!-- 常见问题 -->
+        <div class="slide">
+            <h1>❓ 常见问题</h1>
+            
+            <div class="card">
+                <h3>Q: AI 会不会泄露公司机密？</h3>
+                <p>A: 我们的数据主要在本地处理，默认不会上传到外部服务器</p>
+            </div>
+            
+            <div class="card">
+                <h3>Q: 免费版有什么限制？</h3>
+                <p>A: 免费版完全够日常使用，付费版适合需要更强 AI 能力的场景</p>
+            </div>
+            
+            <div class="card">
+                <h3>Q: 回答错了怎么办？</h3>
+                <p>A: 直接指出错误，AI 会重新生成；重要内容建议人工复核</p>
+            </div>
+            
+            <div class="card">
+                <h3>Q: 遇到问题找谁？</h3>
+                <p>A: 联系 IT部门 或在内部群求助</p>
+            </div>
+        </div>
+        
+        <!-- 总结 -->
+        <div class="slide">
+            <div class="cover">
+                <div style="font-size: 4em; margin-bottom: 20px;">🚀</div>
+                <h1>开始使用吧！</h1>
+                
+                <div class="card" style="text-align: left; margin: 30px 0;">
+                    <h3>快速开始</h3>
+                    <ol>
+                        <li>下载安装 OpenClaw</li>
+                        <li>用 Telegram 扫码绑定</li>
+                        <li>开始和 AI 对话</li>
+                    </ol>
+                </div>
+                
+                <p style="color: #666;">有任何问题，随时在群里 @我</p>
+                
+                <div style="margin-top: 40px;">
+                    <span class="tag">品牌</span>
+                    <span class="tag">公关</span>
+                    <span class="tag">新媒体</span>
+                    <span class="tag">用户研究</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="nav">
+        <button class="btn btn-outline" onclick="prevSlide()">← 上一页</button>
+        <button class="btn" onclick="nextSlide()">下一页 →</button>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const progress = document.getElementById('progress');
+        
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('active');
+                if (i === index) {
+                    slide.classList.add('active');
+                }
+            });
+            progress.style.width = ((index + 1) / slides.length * 100) + '%';
+        }
+        
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+        
+        showSlide(0);
+    </script>
+</body>
+</html>
